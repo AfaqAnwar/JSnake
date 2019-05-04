@@ -1,29 +1,38 @@
 package Snake;
 
-public class Block {
-    private int xPos;
-    private int yPos;
-    private boolean isWall;
-    private boolean containsApple;
-    private boolean isOccupied;
+import javafx.scene.shape.Rectangle;
 
-    public Block(int xPos, int yPos, boolean isWall, boolean containsApple, boolean isOccupied) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.isWall = false;
-        this.containsApple = false;
-        this.isOccupied = false;
+/**
+ * Defines a Block within the grid.
+ * @Author Afaq Anwar
+ * @Version 05/04/2019
+ */
+public class Block extends Rectangle {
+    private int xLoc;
+    private int yLoc;
+    // Old position is stored to move all blocks.
+    Block previousBlock;
+    private int oldXLoc;
+    private int oldYLoc;
+
+
+    /**
+     * Main Constructor that builds off the rectangle.
+     * @param xLoc X position of the Block within the grid.
+     * @param yLoc Y position of the Block within the grid.
+     * @param previousBlock The old Block.
+     */
+    public Block(int xLoc, int yLoc, Block previousBlock) {
+        super(Application.blockSize, Application.blockSize);
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
+        this.previousBlock = previousBlock;
+        // Translated based off each block size to keep grid consistency.
+        setTranslateX(xLoc * Application.blockSize);
+        setTranslateY(yLoc * Application.blockSize);
     }
 
-    public int getxPos() { return xPos; }
-    public int getyPos() { return yPos; }
+    public void update() {
 
-    public boolean isWall() { return isWall; }
-    public void setWall(boolean wall) { isWall = wall; }
-
-    public boolean isContainsApple() { return containsApple; }
-    public void setContainsApple(boolean containsApple) { this.containsApple = containsApple; }
-
-    public boolean isOccupied() { return this.isOccupied; }
-    public void setOccupied(boolean isOccupied) { this.isOccupied = isOccupied; }
+    }
 }
