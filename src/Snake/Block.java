@@ -11,12 +11,15 @@ public class Block extends Rectangle {
     private int xLoc;
     private int yLoc;
     // Old position is stored to move all blocks.
-    Block previousBlock;
+    private Block previousBlock;
     private int oldXLoc;
     private int oldYLoc;
 
     private static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private int direction = LEFT;
+
+    private int maxWidth;
+    private int maxHeight;
 
     /**
      * Main Constructor that builds off the rectangle.
@@ -24,7 +27,7 @@ public class Block extends Rectangle {
      * @param yLoc Y position of the Block within the grid.
      * @param previousBlock The old Block.
      */
-    public Block(int xLoc, int yLoc, Block previousBlock) {
+    public Block(int xLoc, int yLoc, Block previousBlock, GameField gameField) {
         super(Application.blockSize, Application.blockSize);
         this.xLoc = xLoc;
         this.yLoc = yLoc;
@@ -32,12 +35,18 @@ public class Block extends Rectangle {
         // Translated based off each block size to keep grid consistency.
         setTranslateX(xLoc * Application.blockSize);
         setTranslateY(yLoc * Application.blockSize);
+        this.maxWidth = gameField.getActualWidth();
+        this.maxHeight = gameField.getActualHeight();
     }
 
     /**
      * Updates the movement based on the direction of the Snake.
      */
     public void update() {
+        // Properties updated for the previousBlock.
+        oldXLoc = xLoc;
+        oldYLoc = yLoc;
+        // If the head is being controlled.
         if (previousBlock == null) {
             switch (direction) {
                 case UP:
@@ -53,23 +62,47 @@ public class Block extends Rectangle {
                     this.move(LEFT);
                     break;
             }
+        } else {
+            xLoc = previousBlock.oldXLoc;
+            yLoc = previousBlock.oldYLoc;
         }
+        this.updateVisualPosition();
+    }
+
+    /**
+     * Updates the blocks within the visual field.
+     */
+    private void updateVisualPosition() {
+        setTranslateX(xLoc * Application.blockSize);
+        setTranslateY(yLoc * Application.blockSize);
     }
 
     /**
      * Changes the position of the Snake.
-     * @param Direction Integer that represents the direction.
+     * @param direction Integer that represents the direction.
      *                  UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3
      */
-    public void move(int Direction) {
+    private void move(int direction) {
        if (direction == UP) {
            yLoc--;
+           if (yLoc < 0) {
+               yLoc = maxHeight - 1;
+           }
        } else if (direction == RIGHT) {
            xLoc++;
+           if (yLoc >= maxWidth) {
+               xLoc = 0;
+           }
        } else if (direction == DOWN) {
            yLoc++;
+           if (yLoc >= maxHeight) {
+               yLoc = 0;
+           }
        } else if (direction == LEFT) {
            xLoc--;
+           if (xLoc < 0) {
+               xLoc = maxWidth - 1;
+           }
        }
     }
 }
