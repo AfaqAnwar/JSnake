@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Defines a Block within the grid.
  * @Author Afaq Anwar
- * @Version 05/04/2019
+ * @Version 05/06/2019
  */
 public class Block extends Rectangle {
     private int xLoc;
@@ -15,6 +15,8 @@ public class Block extends Rectangle {
     private int oldXLoc;
     private int oldYLoc;
 
+    private static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+    private int direction = LEFT;
 
     /**
      * Main Constructor that builds off the rectangle.
@@ -32,7 +34,42 @@ public class Block extends Rectangle {
         setTranslateY(yLoc * Application.blockSize);
     }
 
+    /**
+     * Updates the movement based on the direction of the Snake.
+     */
     public void update() {
+        if (previousBlock == null) {
+            switch (direction) {
+                case UP:
+                    this.move(UP);
+                    break;
+                case RIGHT:
+                    this.move(RIGHT);
+                    break;
+                case DOWN:
+                    this.move(DOWN);
+                    break;
+                case LEFT:
+                    this.move(LEFT);
+                    break;
+            }
+        }
+    }
 
+    /**
+     * Changes the position of the Snake.
+     * @param Direction Integer that represents the direction.
+     *                  UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3
+     */
+    public void move(int Direction) {
+       if (direction == UP) {
+           yLoc--;
+       } else if (direction == RIGHT) {
+           xLoc++;
+       } else if (direction == DOWN) {
+           yLoc++;
+       } else if (direction == LEFT) {
+           xLoc--;
+       }
     }
 }
