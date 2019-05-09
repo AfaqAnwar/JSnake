@@ -9,12 +9,12 @@ import javafx.stage.Stage;
 /**
  * Starts JSnake.
  * @Author Afaq Anwar
- * @Version 05/06/2019
+ * @Version 05/08/2019
  */
 public class Application extends javafx.application.Application {
     final static int blockSize = 10;
-    private int width = 50;
-    private int height = 50;
+    private int width = 40;
+    private int height = 40;
     private int initialSnakeLength = 3;
     private long then = System.nanoTime();
 
