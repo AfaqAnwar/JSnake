@@ -29,7 +29,7 @@ public class Application extends javafx.application.Application {
         AnimationTimer gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (now - then > 1000000000 / 4) {
+                if (now - then > 1000000000 / 10) {
                     gameField.update();
                     then = now;
                 }
@@ -43,9 +43,15 @@ public class Application extends javafx.application.Application {
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case UP:
+                    if (gameField.getCurrentSnake().getDirection() == Block.DOWN) {
+                        break;
+                    }
                     gameField.getCurrentSnake().setDirection(Block.UP);
                     break;
                 case DOWN:
+                    if (gameField.getCurrentSnake().getDirection() == Block.UP) {
+                        break;
+                    }
                     gameField.getCurrentSnake().setDirection(Block.DOWN);
                     break;
                 case LEFT:

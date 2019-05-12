@@ -93,7 +93,7 @@ public class Block extends Rectangle {
            }
        } else if (direction == RIGHT) {
            xLoc++;
-           if (yLoc >= maxWidth) {
+           if (xLoc >= maxWidth) {
                xLoc = 0;
            }
        } else if (direction == DOWN) {
