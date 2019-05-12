@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Snake Object.
  * @Author Afaq Anwar
- * @Version 05/06/2019
+ * @Version 05/12/2019
  */
 public class Snake {
     private ArrayList<Block> snakeSegments;
@@ -29,4 +29,9 @@ public class Snake {
     }
 
     public ArrayList<Block> getSnakeSegments() { return this.snakeSegments; }
+
+    public int getDirection() { return headBlock.getDirection(); }
+    public void setDirection(int direction) {
+        headBlock.setDirection(direction);
+    }
 }

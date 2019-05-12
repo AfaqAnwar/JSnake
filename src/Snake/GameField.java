@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Defines the game's borders.
  * @Author Afaq Anwar
- * @Verison 05/06/2019
+ * @Verison 05/12/2019
  */
 public class GameField extends Pane {
     private int width;
@@ -30,6 +30,7 @@ public class GameField extends Pane {
     // Getters. These were implemented since the Pane methods cannot be overwritten.
     public int getActualWidth() { return width; }
     public int getActualHeight() { return height; }
+    public Snake getCurrentSnake() { return currentSnake; }
 
     public void setCurrentSnake(Snake currentSnake) {
         this.currentSnake = currentSnake;

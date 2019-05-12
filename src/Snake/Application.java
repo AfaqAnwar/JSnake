@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * Starts JSnake.
  * @Author Afaq Anwar
- * @Version 05/08/2019
+ * @Version 05/12/2019
  */
 public class Application extends javafx.application.Application {
     final static int blockSize = 10;
@@ -39,6 +39,30 @@ public class Application extends javafx.application.Application {
 
         root.getChildren().add(gameField);
         Scene scene = new Scene(root);
+        // Handles keyboard input to allow the Snake to move.
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case UP:
+                    gameField.getCurrentSnake().setDirection(Block.UP);
+                    break;
+                case DOWN:
+                    gameField.getCurrentSnake().setDirection(Block.DOWN);
+                    break;
+                case LEFT:
+                    if (gameField.getCurrentSnake().getDirection() == Block.RIGHT) {
+                        break;
+                    }
+                    gameField.getCurrentSnake().setDirection(Block.LEFT);
+                    break;
+                case RIGHT:
+                    if (gameField.getCurrentSnake().getDirection() == Block.LEFT) {
+                        break;
+                    }
+                    gameField.getCurrentSnake().setDirection(Block.RIGHT);
+                    break;
+            }
+        });
+
         main.setResizable(false);
         main.setScene(scene);
         main.setTitle("JSnake");
