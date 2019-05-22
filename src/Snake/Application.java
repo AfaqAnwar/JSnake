@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * Starts JSnake.
  * @Author Afaq Anwar
- * @Version 05/12/2019
+ * @Version 05/21/2019
  */
 public class Application extends javafx.application.Application {
     final static int blockSize = 10;
@@ -24,7 +24,6 @@ public class Application extends javafx.application.Application {
         root.setPadding(new Insets(10));
         GameField gameField = new GameField(width, height);
         gameField.setCurrentSnake(new Snake(initialSnakeLength, gameField));
-
 
         AnimationTimer gameTimer = new AnimationTimer() {
             @Override

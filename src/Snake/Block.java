@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Defines a Block within the grid.
  * @Author Afaq Anwar
- * @Version 05/12/2019
+ * @Version 05/21/2019
  */
 public class Block extends Rectangle {
     private int xLoc;
@@ -41,6 +41,11 @@ public class Block extends Rectangle {
 
     public int getDirection() { return this.direction; }
     public void setDirection(int direction) { this.direction = direction; }
+
+    public int getxLoc() { return xLoc; }
+    public int getyLoc() { return yLoc; }
+    public int getOldXLoc() { return oldXLoc; }
+    public int getOldYLoc() { return oldYLoc; }
 
     /**
      * Updates the movement based on the direction of the Snake.
