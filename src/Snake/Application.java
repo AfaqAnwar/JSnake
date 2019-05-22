@@ -19,6 +19,9 @@ public class Application extends javafx.application.Application {
     private int height = 40;
     private int initialSnakeLength = 3;
     private long then = System.nanoTime();
+    private boolean directionChanged = false;
+    private boolean hasNext = false;
+    private int nextUpdate = 0;
 
     @Override
     public void start(Stage main) {
@@ -37,6 +40,11 @@ public class Application extends javafx.application.Application {
                     gameField.update();
                     then = now;
                     score.setText("Score: " + gameField.getScore());
+                    directionChanged = false;
+                    if (hasNext) {
+                        setDirection(gameField.getCurrentSnake(), nextUpdate);
+                        hasNext = false;
+                    }
                 }
             }
         };
@@ -51,25 +59,25 @@ public class Application extends javafx.application.Application {
                     if (gameField.getCurrentSnake().getDirection() == Block.DOWN) {
                         break;
                     }
-                    gameField.getCurrentSnake().setDirection(Block.UP);
+                    this.setDirection(gameField.getCurrentSnake(), Block.UP);
                     break;
                 case DOWN:
                     if (gameField.getCurrentSnake().getDirection() == Block.UP) {
                         break;
                     }
-                    gameField.getCurrentSnake().setDirection(Block.DOWN);
+                    this.setDirection(gameField.getCurrentSnake(), Block.DOWN);
                     break;
                 case LEFT:
                     if (gameField.getCurrentSnake().getDirection() == Block.RIGHT) {
                         break;
                     }
-                    gameField.getCurrentSnake().setDirection(Block.LEFT);
+                    this.setDirection(gameField.getCurrentSnake(), Block.LEFT);
                     break;
                 case RIGHT:
                     if (gameField.getCurrentSnake().getDirection() == Block.LEFT) {
                         break;
                     }
-                    gameField.getCurrentSnake().setDirection(Block.RIGHT);
+                    this.setDirection(gameField.getCurrentSnake(), Block.RIGHT);
                     break;
             }
         });
@@ -78,6 +86,22 @@ public class Application extends javafx.application.Application {
         main.setScene(scene);
         main.setTitle("JSnake");
         main.show();
+    }
+
+    /**
+     * Sets the direction of a Snake.
+     * This is used so that two inputs can be made and it will pass them through, removing any sort of perceived delay.
+     * @param snake The current Snake within the GameField.
+     * @param direction Integer that represents a Direction.
+     */
+    public void setDirection(Snake snake, int direction) {
+        if (!directionChanged) {
+            snake.setDirection(direction);
+            directionChanged = true;
+        } else {
+            hasNext = true;
+            nextUpdate = direction;
+        }
     }
 
     public static void main(String[] args) {
