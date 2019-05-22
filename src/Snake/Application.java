@@ -1,12 +1,16 @@
 package Snake;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Field;
 
 /**
  * Starts JSnake.
@@ -15,6 +19,7 @@ import javafx.stage.Stage;
  */
 public class Application extends javafx.application.Application {
     final static int blockSize = 10;
+    private GameField gameField;
     private int width = 40;
     private int height = 40;
     private int initialSnakeLength = 3;
@@ -27,7 +32,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage main) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(10));
-        GameField gameField = new GameField(width, height);
+        gameField = new GameField(width, height);
         gameField.setCurrentSnake(new Snake(initialSnakeLength, gameField));
 
         Label score = new Label("Score: 0");
@@ -37,10 +42,29 @@ public class Application extends javafx.application.Application {
             @Override
             public void handle(long now) {
                 if (now - then > 1000000000 / 10) {
+                    if (gameField.isDead()) {
+                        this.stop();
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setHeaderText("You Have Lost");
+                        alert.setContentText("Your score was: " + gameField.getScore());
+                        Platform.runLater(alert::showAndWait);
+
+                        alert.setOnHidden(e -> {
+                            root.getChildren().removeAll(gameField, score);
+                            gameField = new GameField(width, height);
+                            gameField.setCurrentSnake(new Snake(initialSnakeLength, gameField));
+                            score.setText("Score: 0");
+                            root.getChildren().addAll(gameField, score);
+                            this.start();
+                        });
+                    }
+
                     gameField.update();
                     then = now;
                     score.setText("Score: " + gameField.getScore());
                     directionChanged = false;
+
                     if (hasNext) {
                         setDirection(gameField.getCurrentSnake(), nextUpdate);
                         hasNext = false;

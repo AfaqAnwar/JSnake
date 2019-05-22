@@ -81,4 +81,15 @@ public class GameField extends Pane {
     public boolean isEaten(Food food) {
         return food.getxLoc() == currentSnake.getHeadBlock().getxLoc() && food.getyLoc() == currentSnake.getHeadBlock().getyLoc();
     }
+
+    public boolean isDead() {
+        for (Block segment : visualBlocks) {
+            if (segment != this.getCurrentSnake().getHeadBlock()) {
+                if (segment.getxLoc() == this.getCurrentSnake().getHeadBlock().getxLoc() && segment.getyLoc() == this.getCurrentSnake().getHeadBlock().getyLoc()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
