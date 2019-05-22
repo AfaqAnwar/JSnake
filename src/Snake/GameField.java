@@ -17,8 +17,8 @@ public class GameField extends Pane {
     private Snake currentSnake;
     private ArrayList<Block> visualBlocks = new ArrayList<Block>();
 
-    Food food;
-    int score;
+    private Food food;
+    private int score;
 
     public GameField(int width, int height) {
         this.width = width;
@@ -30,12 +30,14 @@ public class GameField extends Pane {
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
         food = this.addFood();
+        this.score = 0;
     }
 
     // Getters. These were implemented since the Pane methods cannot be overwritten.
     public int getActualWidth() { return width; }
     public int getActualHeight() { return height; }
     public Snake getCurrentSnake() { return currentSnake; }
+    public int getScore() { return this.score; }
 
     public void setCurrentSnake(Snake currentSnake) {
         this.currentSnake = currentSnake;

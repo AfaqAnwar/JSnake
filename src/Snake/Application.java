@@ -3,7 +3,9 @@ package Snake;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -25,18 +27,22 @@ public class Application extends javafx.application.Application {
         GameField gameField = new GameField(width, height);
         gameField.setCurrentSnake(new Snake(initialSnakeLength, gameField));
 
+        Label score = new Label("Score: 0");
+        score.setFont(Font.font("Arial", 18));
+
         AnimationTimer gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (now - then > 1000000000 / 10) {
                     gameField.update();
                     then = now;
+                    score.setText("Score: " + gameField.getScore());
                 }
             }
         };
         gameTimer.start();
 
-        root.getChildren().add(gameField);
+        root.getChildren().addAll(gameField, score);
         Scene scene = new Scene(root);
         // Handles keyboard input to allow the Snake to move.
         scene.setOnKeyPressed(e -> {
